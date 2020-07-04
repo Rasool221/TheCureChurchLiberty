@@ -1,0 +1,13 @@
+title=The Cure Church Liberty
+major_version=1
+minor_version=0
+build_version=1
+requires_audiometadata=1
+requires_mkv=1
+splash_screen_fhd=pkg:/images/splash_fhd.jpg
+splash_screen_hd=pkg:/images/splash_hd.jpg
+splash_screen_sd=pkg:/images/splash_sd.jpg
+splash_color=#ffffff
+splash_min_time=2500
+ui_resolutions=FHD,HD,SD
+splash_rsg_optimization=1
