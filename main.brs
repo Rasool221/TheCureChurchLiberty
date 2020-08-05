@@ -27,17 +27,21 @@ sub Main(input as Dynamic)
       'launch/prep the content mapped to the contentID here
     end if
   end if
-  showHeroScreen()
+  showHomeScreen(input)
 end sub
 
 ' Initializes the scene and shows the main homepage.
 ' Handles closing of the channel.
-sub showHeroScreen()
-  print "main.brs - [showHeroScreen]"
+sub showHomeScreen(input as Dynamic)
+  print "main.brs - [showHomeScreen]"
   screen = CreateObject("roSGScreen")
   m.port = CreateObject("roMessagePort")
   screen.setMessagePort(m.port)
   scene = screen.CreateScene("SimpleVideoScene")
+  scene.backgroundColor="#000000"
+  m.global = screen.getGlobalNode()
+  'Deep link params
+  m.global.addFields({ input: input })
   screen.show()
 
   while(true)
@@ -48,22 +52,3 @@ sub showHeroScreen()
     end if
   end while
 end sub
-
-function isOnline() as Boolean
-  request = CreateObject("roUrlTransfer")
-  request.SetCertificatesFile("common:/certs/ca-bundle.crt")
-  request.SetUrl("https://cdn3.wowza.com/1/TFhtUG5QTmNOQUtB/bXFqK2tO/hls/live/playlist.m3u8")
-  request.EnableHostVerification(false)
-  request.EnablePeerVerification(false)
-  response = request.GetToString()
-
-  print "***Response***: " + response
-
-  if response.Len() > 0 then
-    return true
-  else 
-    return false
-  endif
-
-  return false
-end function
