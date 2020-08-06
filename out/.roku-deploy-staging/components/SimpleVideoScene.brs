@@ -3,16 +3,21 @@
 ' 1st function that runs for the scene component on channel startup
 sub init()
   'To see print statements/debug info, telnet on port 8089
-  m.Image       = m.top.findNode("Image")
+  m.Image = m.top.findNode("Image")
   m.ButtonGroup = m.top.findNode("ButtonGroup")
   m.Details     = m.top.findNode("Details")
   m.Title       = m.top.findNode("Title")
   m.Video       = m.top.findNode("Video")
   m.Warning     = m.top.findNode("WarningDialog")
   m.Exiter      = m.top.findNode("Exiter")
+  
   setContent()
+  
   m.ButtonGroup.setFocus(true)
   m.ButtonGroup.observeField("buttonSelected","onButtonSelected")
+  
+  m.top.backgroundColor = "0x000000FF" 
+  m.top.backgroundURI = ""
 end sub
 
 sub onButtonSelected()
@@ -27,22 +32,35 @@ sub onButtonSelected()
   end if
 end sub
 
-'Set your information here
-sub setContent()
-  m.Title.text = "The Cure Church Liberty"
-
-  Buttons = ["Play"]
-  m.ButtonGroup.buttons = Buttons
-
-  ContentNode = CreateObject("roSGNode", "ContentNode")
-  ContentNode.streamFormat = "hls"
-  ContentNode.url = "https://cdn3.wowza.com/1/TFhtUG5QTmNOQUtB/bXFqK2tO/hls/live/playlist.m3u8"
-  ContentNode.Title = "The Cure Church Liberty live stream" 
-
-  m.Video.content = ContentNode
+sub setContent()  
+  m.currentStatus = CreateObject("roSGNode", "GetStatusTask")
+  m.currentStatus.control = "RUN"
+  m.currentStatus.observeField("isOnline", "loadContentWithStatus")
 end sub
 
-' Called when a key on the remote is pressed
+sub loadContentWithStatus() 
+  if m.currentStatus.isOnline = "true" then
+    Buttons = ["Play", "More"]
+    m.ButtonGroup.buttons = Buttons
+  
+    ContentNode = CreateObject("roSGNode", "ContentNode")
+    ContentNode.streamFormat = "hls"
+    ContentNode.url = "https://cdn3.wowza.com/1/TFhtUG5QTmNOQUtB/bXFqK2tO/hls/live/playlist.m3u8"
+    ContentNode.Title = "The Cure Church Liberty live stream"
+    m.Title.text = "The Cure Church Liberty live stream"
+    m.Video.content = ContentNode
+    m.Image.uri="pkg:/images/streamIsOnline.jpg"
+  else
+    Buttons = ["More"]
+    m.ButtonGroup.buttons = Buttons
+    m.Image.uri="pkg:/images/streamIsOffline.jpg"
+    m.Title.text = "Stream is offline"
+
+  end if
+
+ 
+end sub
+
 function onKeyEvent(key as String, press as Boolean) as Boolean
   print "in SimpleVideoScene.xml onKeyEvent ";key;" "; press
   if press then

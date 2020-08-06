@@ -49,21 +49,3 @@ sub showHeroScreen()
   end while
 end sub
 
-function isOnline() as Boolean
-  request = CreateObject("roUrlTransfer")
-  request.SetCertificatesFile("common:/certs/ca-bundle.crt")
-  request.SetUrl("https://cdn3.wowza.com/1/TFhtUG5QTmNOQUtB/bXFqK2tO/hls/live/playlist.m3u8")
-  request.EnableHostVerification(false)
-  request.EnablePeerVerification(false)
-  response = request.GetToString()
-
-  print "***Response***: " + response
-
-  if response.Len() > 0 then
-    return true
-  else 
-    return false
-  endif
-
-  return false
-end function
