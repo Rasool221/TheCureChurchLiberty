@@ -3,13 +3,14 @@
 <component name="SimpleVideoScene" extends="Scene">
   <children>
 
-    <Label id="Title" font="font:LargeBoldSystemFont" translation="[750, 250]" width="850" />
-    <ButtonGroup id="ButtonGroup" translation="[800,325]"/>
-    <Poster id="Image" translation="[300,250]"/>
+    <ButtonGroup id="ButtonGroup" translation="[1220,500]"/>
+    <Poster id="Image" translation="[200,200]"/>
 
     <Overhang
       showClock="true"
-      title="WELCOME HOME" />
+      title="WELCOME HOME" 
+      logoUri="pkg:/images/thecurechurchlogo.png"
+      logoBaselineOffset="20"/>
 
     <Video
       id="Video"
@@ -23,6 +24,11 @@
       title="Warning"
       message="PUT A WARNING MESSAGE HERE"
       visible="false" />
+
+    <BusySpinner
+      id="loadingSpinner"
+      visible = "false" 
+      translation="[640, 480]"/>
 
     <Exiter id="Exiter"/>
   </children>
