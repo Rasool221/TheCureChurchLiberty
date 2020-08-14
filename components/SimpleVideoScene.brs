@@ -10,21 +10,25 @@ sub init()
   m.Video       = m.top.findNode("Video")
   m.Warning     = m.top.findNode("WarningDialog")
   m.Exiter      = m.top.findNode("Exiter")
+  m.VideosRow   = m.top.findNode("videosRowList")
   
   setContent()
   
   m.ButtonGroup.setFocus(true)
   m.ButtonGroup.observeField("buttonSelected","onButtonSelected")
-  
+
   m.top.backgroundColor = "0x000000FF" 
   m.top.backgroundURI = ""
 end sub
 
 sub onButtonSelected()
   'Ok'
+
   if m.ButtonGroup.buttonSelected = 0
     if m.ButtonGroup.buttons[0] = "Refresh" then
       showspinner()
+      m.busyspinner.translation = "[1000, 0]"
+      m.busyspinner.visible = true
       setContent()
     else if m.ButtonGroup.buttons[0] = "Play" then
       m.Video.visible = "true"
@@ -50,6 +54,8 @@ sub setContent()
   m.busyspinner.poster.observeField("loadStatus", "showspinner")
   m.busyspinner.poster.uri = "pkg:/images/busyspinner_hd.png"
 
+  m.VideosRow.content = CreateObject("roSGNode", "RowListContent")
+
   m.ButtonGroup.setFocus(true)
 end sub
 
@@ -60,6 +66,8 @@ sub showspinner()
     m.busyspinner.translation = [ centerx, centery ]
 
     m.busyspinner.visible = true
+
+    m.busyspinner.translation = "[640, 480]"
   end if
 end sub
 
@@ -87,6 +95,8 @@ sub createLiveScene()
   m.Video.content = ContentNode
   m.Image.uri="pkg:/images/streamIsOnline.jpg"
 
+  m.Image.translation = "[200, 200]"
+
   m.ButtonGroup.setFocus(true)
 end sub
 
@@ -99,6 +109,8 @@ sub createOfflineScene()
   if m.Video.visible = true then
     m.Video.visible = false
   end if
+
+  m.Image.translation = "[400, 450]"
 
   m.ButtonGroup.setFocus(true)
 end sub
@@ -126,6 +138,10 @@ function onKeyEvent(key as String, press as Boolean) as Boolean
         m.Warning.visible = false
         m.ButtonGroup.setFocus(true)
         return true
+      end if
+    else if key = "down"
+      if m.ButtonGroup.buttonFocused = 1 then
+        m.VideosRow.setFocus(true)
       end if
     else
       return false

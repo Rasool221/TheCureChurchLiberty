@@ -19,6 +19,7 @@ sub getStatus()
   else 
     m.top.isOnline = "false"
   endif
+  
 
   print "Set m.top.isOnline to: " + m.top.isOnline
 end sub

@@ -3,8 +3,25 @@
 <component name="SimpleVideoScene" extends="Scene">
   <children>
 
+    <Poster
+      id="Background"
+      width="1920"
+      height="1080" 
+      uri="pkg:/images/background.png"/>
+
+    <Animation
+      id="fadeinAnimation"
+      repeat="false"
+      duration="0.3">
+      <FloatFieldInterpolator
+        id="backgroundInterpolator"
+        key="[0.0, 1.0]"
+        keyValue="[0.0, 1.0]"
+        fieldToInterp="Background.opacity"/>
+    </Animation>
+
     <ButtonGroup id="ButtonGroup" translation="[1220,500]"/>
-    <Poster id="Image" translation="[200,200]"/>
+    <Poster id="Image" translation="[400,450]"/>
 
     <Overhang
       showClock="true"
@@ -27,10 +44,48 @@
 
     <BusySpinner
       id="loadingSpinner"
-      visible = "false" 
-      translation="[640, 480]"/>
+      visible = "true"/>
 
+     <ParallelAnimation id="FadeOut">
+      <Animation
+        id="HFadeIn"
+        duration=".4"
+        repeat="false"
+        easeFunction="inQuad">
+        <FloatFieldInterpolator
+          id="HFadeInInterp"
+          key="[0,1]"
+          keyValue="[0.0, 1.0]"
+          fieldToInterp="HeroScreen.opacity"/>
+      </Animation>
+      <Animation
+        id="DSFadeOut"
+        duration=".4"
+        repeat="false"
+        easeFunction="inQuad">
+        <FloatFieldInterpolator
+          id="DSFadeOutInterp"
+          key="[0,1]"
+          keyValue="[1.0, 0.0]"
+          fieldToInterp="DetailsScreen.opacity"/>
+      </Animation>
+    </ParallelAnimation>
+    
     <Exiter id="Exiter"/>
+
+    <RowList 
+    id = "videosRowList" 
+    translation = "[ 130, 900 ]" 
+    itemComponentName = "RowListItem" 
+    numRows = "4" 
+    itemSize = "[ 1608, 308 ]" 
+    rowItemSize = "[ [536, 308] ]" 
+    itemSpacing = "[ 0, 40 ]" 
+    showRowLabel = "[ true ]" 
+    drawFocusFeedback = "false" 
+    vertFocusAnimationStyle = "fixedFocusWrap" 
+    rowFocusAnimationStyle = "fixedFocusWrap" />
+
   </children>
 
   <script type="text/brightscript" uri="pkg:/components/SimpleVideoScene.brs"/>
