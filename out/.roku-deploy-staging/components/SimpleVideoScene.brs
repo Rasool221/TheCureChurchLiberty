@@ -11,12 +11,20 @@ sub init()
   m.Warning     = m.top.findNode("WarningDialog")
   m.Exiter      = m.top.findNode("Exiter")
   m.VideosRow   = m.top.findNode("videosRowList")
+  m.PreviewVideo = m.top.findNode("previewVideo")
+  
+  m.rowListFadeOut = m.top.findNode("RowListFadeOut")
+  m.rowListFadeIn = m.top.findNode("RowListFadeIn")
+
+  m.backgroundFadeIn = m.top.findNode("fadeinAnimation")
   
   setContent()
   
   m.ButtonGroup.setFocus(true)
   m.ButtonGroup.observeField("buttonSelected","onButtonSelected")
 
+
+  m.backgroundFadeIn.control = "start"
   m.top.backgroundColor = "0x000000FF" 
   m.top.backgroundURI = ""
 end sub
@@ -26,13 +34,13 @@ sub onButtonSelected()
 
   if m.ButtonGroup.buttonSelected = 0
     if m.ButtonGroup.buttons[0] = "Refresh" then
-      showspinner()
       m.busyspinner.translation = "[1000, 0]"
       m.busyspinner.visible = true
       setContent()
     else if m.ButtonGroup.buttons[0] = "Play" then
       m.Video.visible = "true"
       m.Video.control = "play"
+      m.VideosRow.visible = false
       m.Video.setFocus(true)
     end if
   'Exit button pressed'
@@ -61,12 +69,7 @@ end sub
 
 sub showspinner()
   if(m.busyspinner.poster.loadStatus = "ready")
-    centerx = (1280 - m.busyspinner.poster.bitmapWidth) / 2
-    centery = (720 - m.busyspinner.poster.bitmapWidth) / 2
-    m.busyspinner.translation = [ centerx, centery ]
-
     m.busyspinner.visible = true
-
     m.busyspinner.translation = "[640, 480]"
   end if
 end sub
@@ -83,7 +86,9 @@ sub loadContentWithStatus()
   end if
 end sub
 
-sub createLiveScene() 
+sub createLiveScene()
+  m.busyspinner.poster.visible = false 
+  
   Buttons = ["Play", "Past Broadcasts"]
   m.ButtonGroup.buttons = Buttons
 
@@ -93,14 +98,20 @@ sub createLiveScene()
   ContentNode.Title = "The Cure Church Liberty Live Stream"
   
   m.Video.content = ContentNode
-  m.Image.uri="pkg:/images/streamIsOnline.jpg"
 
+  m.Image.visible = false
+  m.Image.uri="pkg:/images/streamIsOnline.jpg"
   m.Image.translation = "[200, 200]"
+
+  m.PreviewVideo.content = ContentNode
+  m.PreviewVideo.control = "play" 
 
   m.ButtonGroup.setFocus(true)
 end sub
 
-sub createOfflineScene() 
+sub createOfflineScene()
+  m.busyspinner.poster.visible = false 
+  
   Buttons = ["Refresh", "Past Broadcasts"]
   
   m.ButtonGroup.buttons = Buttons
@@ -128,8 +139,13 @@ function onKeyEvent(key as String, press as Boolean) as Boolean
         m.Video.control = "stop"
         m.Video.visible = false
         m.ButtonGroup.setFocus(true)
+        m.VideosRow.visible = true
         return true
-      else
+      else if m.VideosRow.hasFocus()
+        m.ButtonGroup.setFocus(true)
+        m.rowListFadeOut.control = "start"
+        return true
+      else 
         return false
       end if
     else if key = "OK"
@@ -142,6 +158,7 @@ function onKeyEvent(key as String, press as Boolean) as Boolean
     else if key = "down"
       if m.ButtonGroup.buttonFocused = 1 then
         m.VideosRow.setFocus(true)
+        m.rowListFadeIn.control = "start"
       end if
     else
       return false
@@ -149,3 +166,11 @@ function onKeyEvent(key as String, press as Boolean) as Boolean
   end if
   return false
 end function
+
+sub scrollScreen()
+  if m.currentStatus.isOnline = "true" then
+
+  else
+
+  end if
+end sub

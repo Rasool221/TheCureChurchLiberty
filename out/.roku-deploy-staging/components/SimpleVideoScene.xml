@@ -29,6 +29,13 @@
       logoUri="pkg:/images/thecurechurchlogo.png"
       logoBaselineOffset="20"/>
 
+    <Video 
+      id="previewVideo"
+      width="640"
+      height="480"
+      translation="[200, 200]"
+      visible="false" />
+
     <Video
       id="Video"
       width="1920"
@@ -48,26 +55,27 @@
 
      <ParallelAnimation id="FadeOut">
       <Animation
-        id="HFadeIn"
-        duration=".4"
-        repeat="false"
-        easeFunction="inQuad">
-        <FloatFieldInterpolator
-          id="HFadeInInterp"
-          key="[0,1]"
-          keyValue="[0.0, 1.0]"
-          fieldToInterp="HeroScreen.opacity"/>
-      </Animation>
-      <Animation
-        id="DSFadeOut"
+        id="RowListFadeOut"
         duration=".4"
         repeat="false"
         easeFunction="inQuad">
         <FloatFieldInterpolator
           id="DSFadeOutInterp"
           key="[0,1]"
-          keyValue="[1.0, 0.0]"
-          fieldToInterp="DetailsScreen.opacity"/>
+          keyValue="[1.0, 0.5]"
+          fieldToInterp="videosRowList.opacity"/>
+      </Animation>
+
+      <Animation
+        id="RowListFadeIn"
+        duration=".4"
+        repeat="false"
+        easeFunction="inQuad">
+        <FloatFieldInterpolator
+          id="DSFadeOutInterp"
+          key="[0,1]"
+          keyValue="[0.5, 1.0]"
+          fieldToInterp="videosRowList.opacity"/>
       </Animation>
     </ParallelAnimation>
     
@@ -82,9 +90,10 @@
     rowItemSize = "[ [536, 308] ]" 
     itemSpacing = "[ 0, 40 ]" 
     showRowLabel = "[ true ]" 
-    drawFocusFeedback = "false" 
+    drawFocusFeedback = "true" 
     vertFocusAnimationStyle = "fixedFocusWrap" 
-    rowFocusAnimationStyle = "fixedFocusWrap" />
+    rowFocusAnimationStyle = "fixedFocusWrap"
+    opacity=".5" />
 
   </children>
 
