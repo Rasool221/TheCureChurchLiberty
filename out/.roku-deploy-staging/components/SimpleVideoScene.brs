@@ -38,9 +38,13 @@ sub onButtonSelected()
       m.busyspinner.visible = true
       setContent()
     else if m.ButtonGroup.buttons[0] = "Play" then
+      m.VideosRow.visible = false
+      
+      m.PreviewVideo.visible = "false"
+      m.PreviewVideo.control = "stop"
+      
       m.Video.visible = "true"
       m.Video.control = "play"
-      m.VideosRow.visible = false
       m.Video.setFocus(true)
     end if
   'Exit button pressed'
@@ -93,6 +97,7 @@ sub createLiveScene()
   m.ButtonGroup.buttons = Buttons
 
   ContentNode = CreateObject("roSGNode", "ContentNode")
+
   ContentNode.streamFormat = "hls"
   ContentNode.url = "https://cdn3.wowza.com/1/TFhtUG5QTmNOQUtB/bXFqK2tO/hls/live/playlist.m3u8"
   ContentNode.Title = "The Cure Church Liberty Live Stream"
@@ -103,13 +108,18 @@ sub createLiveScene()
   m.Image.uri="pkg:/images/streamIsOnline.jpg"
   m.Image.translation = "[200, 200]"
 
+  m.ButtonGroup.translation = "[1420,500]"
+
   m.PreviewVideo.content = ContentNode
   m.PreviewVideo.control = "play" 
+  m.PreviewVideo.visible = true
 
   m.ButtonGroup.setFocus(true)
 end sub
 
 sub createOfflineScene()
+  m.ButtonGroup.translation = "[1220,500]"
+
   m.busyspinner.poster.visible = false 
   
   Buttons = ["Refresh", "Past Broadcasts"]
