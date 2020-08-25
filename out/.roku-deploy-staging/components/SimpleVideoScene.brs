@@ -15,6 +15,29 @@ sub init()
   
   m.rowListFadeOut = m.top.findNode("RowListFadeOut")
   m.rowListFadeIn = m.top.findNode("RowListFadeIn")
+  
+  m.offlinePosterFadeOut = m.top.findNode("offlinePosterFadeOut")
+  m.offlinePosterFadeIn = m.top.findNode("offlinePosterFadeIn")
+
+  m.offlinePosterMoveUp = m.top.findNode("offlinePosterMoveUp")
+  m.offlinePosterMoveDown = m.top.findNode("offlinePosterMoveDown")
+
+  m.buttonGroupMoveDownLive = m.top.findNode("buttonGroupMoveDownLive")
+  m.buttonGroupMoveUpLive = m.top.findNode("buttonGroupMoveUpLive")
+  m.buttonGroupMoveDown = m.top.findNode("buttonGroupMoveDown")
+  m.buttonGroupMoveUp = m.top.findNode("buttonGroupMoveUp")
+  
+  m.previewVideoFadeOut = m.top.findNode("videoPreviewFadeOut")
+  m.previewVideoFadeIn = m.top.findNode("videoPreviewFadeIn")
+
+  m.previewVideoMoveUp = m.top.findNode("videoPreviewMoveUp")
+  m.previewVideoMoveDown = m.top.findNode("videoPreviewMoveDown")
+
+  m.ButtonGroupFadeOut = m.top.findNode("ButtonGroupFadeOut")
+  m.ButtonGroupFadeIn = m.top.findNode("ButtonGroupFadeIn")
+
+  m.rowListMoveUp = m.top.findNode("rowListMoveUp")
+  m.rowListMoveDown = m.top.findNode("rowListMoveDown")
 
   m.backgroundFadeIn = m.top.findNode("fadeinAnimation")
   
@@ -34,9 +57,9 @@ sub onButtonSelected()
 
   if m.ButtonGroup.buttonSelected = 0
     if m.ButtonGroup.buttons[0] = "Refresh" then
-      m.busyspinner.translation = "[1000, 0]"
-      m.busyspinner.visible = true
-      setContent()
+      m.busyspinner.poster.translation = "[900, -200]"
+      m.busyspinner.poster.visible = true
+      refreshLiveStream()
     else if m.ButtonGroup.buttons[0] = "Play" then
       m.VideosRow.visible = false
       
@@ -52,9 +75,15 @@ sub onButtonSelected()
     if m.ButtonGroup.buttons[1] = "Exit" then
       m.Exiter.control = "RUN"
     else if m.ButtonGroup.buttons[1] = "Past Broadcasts" then
-      print "Button is past broadcasts"
+      scrollScreenDown()
     end if    
   end if
+end sub
+
+sub refreshLiveStream()
+  m.currentStatus = CreateObject("roSGNode", "GetStatusTask")
+  m.currentStatus.control = "RUN"
+  m.currentStatus.observeField("isOnline", "loadContentWithStatus")
 end sub
 
 sub setContent()  
@@ -127,6 +156,7 @@ sub createOfflineScene()
   m.ButtonGroup.buttons = Buttons
   m.Image.uri="pkg:/images/streamIsOffline.jpg"
 
+
   if m.Video.visible = true then
     m.Video.visible = false
   end if
@@ -148,12 +178,15 @@ function onKeyEvent(key as String, press as Boolean) as Boolean
       else if m.Video.visible
         m.Video.control = "stop"
         m.Video.visible = false
+
+        m.PreviewVideo.control = "play"
+        m.PreviewVideo.visible = true
+
         m.ButtonGroup.setFocus(true)
         m.VideosRow.visible = true
         return true
       else if m.VideosRow.hasFocus()
-        m.ButtonGroup.setFocus(true)
-        m.rowListFadeOut.control = "start"
+        scrollScreenUp()
         return true
       else 
         return false
@@ -167,8 +200,7 @@ function onKeyEvent(key as String, press as Boolean) as Boolean
       end if
     else if key = "down"
       if m.ButtonGroup.buttonFocused = 1 then
-        m.VideosRow.setFocus(true)
-        m.rowListFadeIn.control = "start"
+        scrollScreenDown()
       end if
     else
       return false
@@ -177,10 +209,48 @@ function onKeyEvent(key as String, press as Boolean) as Boolean
   return false
 end function
 
-sub scrollScreen()
+sub scrollScreenDown()
   if m.currentStatus.isOnline = "true" then
+    m.previewVideoFadeOut.control = "start"
+    m.ButtonGroupFadeOut.control = "start"
+    m.buttonGroupMoveUpLive.control = "start"
+    m.previewVideoMoveUp.control = "start"
+    m.previewVideoFadeOut.control = "start"
+    m.rowListMoveUp.control = "start"
 
+    m.VideosRow.setFocus(true)
+    m.rowListFadeIn.control = "start"
   else
+    m.offlinePosterFadeOut.control = "start"
+    m.ButtonGroupFadeOut.control = "start"
+    m.offlinePosterMoveUp.control = "start"
+    m.buttonGroupMoveUp.control = "start"
+    m.rowListMoveUp.control = "start"
 
+    m.VideosRow.setFocus(true)
+    m.rowListFadeIn.control = "start"
+  end if
+end sub
+
+sub scrollScreenUp()
+  if m.currentStatus.isOnline = "true" then
+    m.previewVideoFadeIn.control = "start"
+    m.ButtonGroupFadeIn.control = "start"
+    m.buttonGroupMoveDownLive.control = "start"
+    m.previewVideoMoveDown.control = "start"
+    m.previewVideoFadeIn.control = "start"
+    m.rowListMoveDown.control = "start"
+
+    m.ButtonGroup.setFocus(true)
+    m.rowListFadeOut.control = "start"
+  else
+    m.offlinePosterFadeIn.control = "start"
+    m.ButtonGroupFadeIn.control = "start"
+    m.offlinePosterMoveDown.control = "start"
+    m.buttonGroupMoveDown.control = "start"
+    m.rowListMoveDown.control = "start"
+
+    m.ButtonGroup.setFocus(true)
+    m.rowListFadeOut.control = "start"
   end if
 end sub

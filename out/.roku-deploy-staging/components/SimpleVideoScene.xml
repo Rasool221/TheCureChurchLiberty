@@ -31,6 +31,7 @@
 
     <Video 
       id="previewVideo"
+      enableUI="false"
       width="1152"
       height="648"
       translation="[200, 200]"
@@ -54,6 +55,198 @@
       visible = "true"/>
 
      <ParallelAnimation id="FadeOut">
+      <Animation
+        id="rowListMoveUp"
+        duration=".4"
+        repeat="false"
+        easeFunction="inQuad">
+        <Vector2DFieldInterpolator
+          id="DSFadeOutInterp"
+          key="[0, 1]"
+          keyValue="[[130, 900],[130, 200]]"
+          fieldToInterp="videosRowList.translation"/>
+      </Animation>
+
+      <Animation
+        id="rowListMoveDown"
+        duration=".4"
+        repeat="false"
+        easeFunction="inQuad">
+        <Vector2DFieldInterpolator
+          id="DSFadeOutInterp"
+          key="[0,1]"
+          keyValue="[[130, 200],[130, 900]]"
+          fieldToInterp="videosRowList.translation"/>
+      </Animation>
+      
+      <Animation
+        id="videoPreviewMoveDown"
+        duration=".4"
+        repeat="false"
+        easeFunction="inQuad">
+        <Vector2DFieldInterpolator
+          id="DSFadeOutInterp"
+          key="[0, 1]"
+          keyValue="[[200, -2000],[200, 200]]"
+          fieldToInterp="previewVideo.translation"/>
+      </Animation>
+
+      <Animation
+        id="videoPreviewMoveUp"
+        duration=".4"
+        repeat="false"
+        easeFunction="inQuad">
+        <Vector2DFieldInterpolator
+          id="DSFadeOutInterp"
+          key="[0,1]"
+          keyValue="[[200, 200],[200, -2000]]"
+          fieldToInterp="previewVideo.translation"/>
+      </Animation>
+      
+      <Animation
+        id="buttonGroupMoveUp"
+        duration=".4"
+        repeat="false"
+        easeFunction="inQuad">
+        <Vector2DFieldInterpolator 
+          id="DSFadeOutInterp"
+          key="[0,1]"
+          keyValue="[[1220,500],[1220, -500]]"
+          fieldToInterp="ButtonGroup.translation"/>
+      </Animation>
+      
+      <Animation
+        id="buttonGroupMoveDown"
+        duration=".4"
+        repeat="false"
+        easeFunction="inQuad">
+        <Vector2DFieldInterpolator
+          id="DSFadeOutInterp"
+          key="[0,1]"
+          keyValue="[[1220, -500],[1220,500]]"
+          fieldToInterp="ButtonGroup.translation"/>
+      </Animation>
+      
+      <Animation
+        id="buttonGroupMoveUpLive"
+        duration=".4"
+        repeat="false"
+        easeFunction="inQuad">
+        <Vector2DFieldInterpolator 
+          id="DSFadeOutInterp"
+          key="[0,1]"
+          keyValue="[[1420,500],[1420, -500]]"
+          fieldToInterp="ButtonGroup.translation"/>
+      </Animation>
+      
+      <Animation
+        id="buttonGroupMoveDownLive"
+        duration=".4"
+        repeat="false"
+        easeFunction="inQuad">
+        <Vector2DFieldInterpolator
+          id="DSFadeOutInterp"
+          key="[0,1]"
+          keyValue="[[1420, -500],[1420,500]]"
+          fieldToInterp="ButtonGroup.translation"/>
+      </Animation>
+      
+      <Animation
+        id="offlinePosterMoveUp"
+        duration=".4"
+        repeat="false"
+        easeFunction="inQuad">
+        <Vector2DFieldInterpolator 
+          id="DSFadeOutInterp"
+          key="[0,1]"
+          keyValue="[[400, 450], [400, -300]]"
+          fieldToInterp="Image.translation"/>
+      </Animation>
+      
+      <Animation
+        id="offlinePosterMoveDown"
+        duration=".4"
+        repeat="false"
+        easeFunction="inQuad">
+        <Vector2DFieldInterpolator
+          id="DSFadeOutInterp"
+          key="[0,1]"
+          keyValue="[[400, -300], [400, 450]]"
+          fieldToInterp="Image.translation"/>
+      </Animation>
+
+      <Animation
+        id="offlinePosterFadeIn"
+        duration=".2"
+        repeat="false"
+        easeFunction="inQuad">
+        <FloatFieldInterpolator
+          id="DSFadeOutInterp"
+          key="[0,1]"
+          keyValue="[0.2, 1.0]"
+          fieldToInterp="Image.opacity"/>
+      </Animation>
+
+      <Animation
+        id="videoPreviewFadeIn"
+        duration=".2"
+        repeat="false"
+        easeFunction="inQuad">
+        <FloatFieldInterpolator
+          id="DSFadeOutInterp"
+          key="[0,1]"
+          keyValue="[0.2, 1.0]"
+          fieldToInterp="previewVideo.opacity"/>
+      </Animation>
+
+      <Animation
+        id="ButtonGroupFadeIn"
+        duration=".2"
+        repeat="false"
+        easeFunction="inQuad">
+        <FloatFieldInterpolator
+          id="DSFadeOutInterp"
+          key="[0,1]"
+          keyValue="[0.2, 1.0]"
+          fieldToInterp="ButtonGroup.opacity"/>
+      </Animation>
+      
+      <Animation
+        id="offlinePosterFadeOut"
+        duration=".2"
+        repeat="false"
+        easeFunction="inQuad">
+        <FloatFieldInterpolator
+          id="DSFadeOutInterp"
+          key="[0,1]"
+          keyValue="[1.0, 0.2]"
+          fieldToInterp="Image.opacity"/>
+      </Animation>
+      
+      <Animation
+        id="videoPreviewFadeOut"
+        duration=".4"
+        repeat="false"
+        easeFunction="inQuad">
+        <FloatFieldInterpolator
+          id="DSFadeOutInterp"
+          key="[0,1]"
+          keyValue="[1.0, 0.5]"
+          fieldToInterp="previewVideo.opacity"/>
+      </Animation>
+
+      <Animation
+        id="ButtonGroupFadeOut"
+        duration=".2"
+        repeat="false"
+        easeFunction="inQuad">
+        <FloatFieldInterpolator
+          id="DSFadeOutInterp"
+          key="[0,1]"
+          keyValue="[1.0, 0.2]"
+          fieldToInterp="ButtonGroup.opacity"/>
+      </Animation>
+
       <Animation
         id="RowListFadeOut"
         duration=".4"
