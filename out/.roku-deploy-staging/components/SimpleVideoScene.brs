@@ -57,7 +57,7 @@ sub onButtonSelected()
 
   if m.ButtonGroup.buttonSelected = 0
     if m.ButtonGroup.buttons[0] = "Refresh" then
-      m.busyspinner.poster.translation = "[900, -200]"
+      m.busyspinner.poster.translation = "[700, -300]"
       m.busyspinner.poster.visible = true
       refreshLiveStream()
     else if m.ButtonGroup.buttons[0] = "Play" then

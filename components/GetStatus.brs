@@ -6,7 +6,7 @@ sub getStatus()
   request = CreateObject("roUrlTransfer")
   
   request.SetCertificatesFile("common:/certs/ca-bundle.crt")
-  request.SetUrl("https://cdn3.wowza.com/1/TFhtUG5QTmNOQUtB/bXFqK2tO/hls/live/playlist.m3u8")
+  request.SetUrl("https://cdn3.wowza.com/1/Y0xKNkMxM000bnFk/d0FQMXZJ/hls/live/playlist.m3u8")
   request.EnableHostVerification(false)
   request.EnablePeerVerification(false)
   

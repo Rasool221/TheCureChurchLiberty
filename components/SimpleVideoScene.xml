@@ -23,6 +23,8 @@
     <ButtonGroup id="ButtonGroup" translation="[1420,500]"/>
     <Poster id="Image" translation="[400,450]"/>
 
+    <LiveIcon id="logoOverlay" logoUri="pkg:/images/live.png"/>
+
     <Overhang
       showClock="true"
       title="WELCOME HOME" 

@@ -40,6 +40,8 @@ sub init()
   m.rowListMoveDown = m.top.findNode("rowListMoveDown")
 
   m.backgroundFadeIn = m.top.findNode("fadeinAnimation")
+
+  m.LiveVideoIconOverlay = m.top.findNode("logoOverlay")
   
   setContent()
   
@@ -57,7 +59,7 @@ sub onButtonSelected()
 
   if m.ButtonGroup.buttonSelected = 0
     if m.ButtonGroup.buttons[0] = "Refresh" then
-      m.busyspinner.poster.translation = "[900, -200]"
+      m.busyspinner.poster.translation = "[700, -300]"
       m.busyspinner.poster.visible = true
       refreshLiveStream()
     else if m.ButtonGroup.buttons[0] = "Play" then
@@ -125,17 +127,18 @@ sub createLiveScene()
   Buttons = ["Play", "Past Broadcasts"]
   m.ButtonGroup.buttons = Buttons
 
+  ' Creating the inner video node for the preview live video ' 
   ContentNode = CreateObject("roSGNode", "ContentNode")
-
   ContentNode.streamFormat = "hls"
-  ContentNode.url = "https://cdn3.wowza.com/1/TFhtUG5QTmNOQUtB/bXFqK2tO/hls/live/playlist.m3u8"
+  ContentNode.url = "https://cdn3.wowza.com/1/Y0xKNkMxM000bnFk/d0FQMXZJ/hls/live/playlist.m3u8"
   ContentNode.Title = "The Cure Church Liberty Live Stream"
-  
-  m.Video.content = ContentNode
+  ContentNode.live = true
 
-  m.Image.visible = false
-  m.Image.uri="pkg:/images/streamIsOnline.jpg"
-  m.Image.translation = "[200, 200]"
+  ' Creating the live video icon overlay of the live video '
+  m.LiveVideoIconOverlay.videoId = m.Video.id
+  m.LiveVideoIconOverlay.visible = true
+
+  m.Video.content = ContentNode
 
   m.ButtonGroup.translation = "[1420,500]"
 
